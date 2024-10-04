@@ -1,0 +1,15 @@
+<!-- Add a comment -->
+<h4>Leave a Comment</h4>
+
+@if(session('success'))
+    <p style="color: green;">{{ session('success') }}</p>
+@endif
+
+<form action="{{ route('comments.store', $post->id) }}" method="POST">
+    @csrf
+    <div class="mb-3">
+        <label for="content" class="form-label">Your Comment</label>
+        <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Comment</button>
+</form>
