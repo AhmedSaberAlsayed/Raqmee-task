@@ -1,40 +1,3 @@
-{{-- @include("dashboard.posts.nav")
-
-    <h1>Search Results</h1>
-
-
-    @foreach($posts as $post)
-        <div>
-            <h2>{{ $post->title }}</h2>
-            <a href="single.html" class="image featured"><img src=" {{ asset("$post->image") }}" width="200px" height="400px" alt="" /></a>
-            <p>{{ ($post->content) }}</p>
-        </div>
-    @endforeach
-@endif
-
-@include('dashboard.posts.footer')
-
-
-
-
-
- --}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @include("dashboard.posts.nav")
 
@@ -58,7 +21,7 @@
                             <a href="#" class="image featured"><img src=" {{ asset("$post->image") }}" width="200px" height="400px" alt="" /></a>
                             <p>{{ $post->content }}</p>
                             <footer>
-                                
+
                                 <ul class="stats">
                                     <li><a href="#" class="icon solid fa-heart">28</a></li>
                                     <li><a href="{{ route("comment.show",$post->id) }}" class="icon solid fa-comment"></a></li>
@@ -76,7 +39,7 @@
 
 						<!-- Intro -->
 							<section id="intro">
-								
+
 							</section>
 
 						<!-- Mini Posts -->
@@ -85,7 +48,7 @@
 
 									<!-- Mini Post -->
 										<article class="mini-post">
-											
+
 										</article>
 
 									<!-- Mini Post -->
@@ -94,7 +57,7 @@
 
 									<!-- Mini Post -->
 										<article class="mini-post">
-											
+
 										</article>
 
 									<!-- Mini Post -->

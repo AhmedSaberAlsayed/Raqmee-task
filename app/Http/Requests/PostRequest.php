@@ -24,19 +24,20 @@ class PostRequest extends FormRequest
         $rules = [
             'title' => 'required|string|max:255',
             'body' => 'required|string',
+
         ];
 
         if ($this->isMethod('post')) {
             $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         }
 
-        if ($this->isMethod('put') || $this->isMethod('patch')) {
+        if ($this->isMethod('put') || $this->isMethod('PATCH')) {
             $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         }
 
         return $rules;
     }
-    
+
     public function messages(): array
     {
         return [

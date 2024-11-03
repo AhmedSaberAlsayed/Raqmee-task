@@ -14,7 +14,7 @@ class UserController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-  
+
     public function handleGoogleCallback()
     {
         try {
@@ -23,13 +23,13 @@ class UserController extends Controller
 
             Auth::login($user, true);
 
-            return redirect()->route('dashboard.posts.index'); 
+            return redirect()->route('dashboard.posts.index');
         } catch (\Exception $e) {
             return redirect('/login')->with('error', 'Unable to login using Google. Please try again.');
         }
     }
 
-    
+
     public function findOrCreateUser($googleUser)
     {
         $user = User::where('google_id', $googleUser->id)->first();
@@ -38,7 +38,6 @@ class UserController extends Controller
             return $user;
         }
 
-        // If user does not exist, create a new user
         return User::create([
             'name' => $googleUser->name,
             'email' => $googleUser->email,

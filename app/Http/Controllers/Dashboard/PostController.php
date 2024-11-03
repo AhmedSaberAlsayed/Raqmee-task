@@ -9,6 +9,7 @@ use App\Http\Requests\PostRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\PostRepository;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -21,11 +22,13 @@ class PostController extends Controller
         $this->postRepository = $postRepository;
     }
 
-    public function index()
-    {
-        $posts = $this->postRepository->all();
-        return view('dashboard.posts.index', compact('posts'));
-    }
+    public function index(Request $request)
+{
+    $query = $request->input('query');
+    $posts = $query ? $this->postRepository->search($query) : $this->postRepository->all();
+
+    return view('dashboard.posts.index', compact('posts'));
+}
 
     public function show()
     {
@@ -44,10 +47,9 @@ class PostController extends Controller
         $id = Auth::user()->id;
         $filename = time() . '.' . $request->image->getClientOriginalExtension();
         $this->uploadimg($request->image, $filename, 'posts');
-
         $data = [
             'title' => $request->title,
-            'content' => $request->input('body'),
+            'content' => $request->body,
             'image' => $filename,
             'user_id' => $id,
         ];
@@ -63,7 +65,7 @@ class PostController extends Controller
         return view('dashboard.posts.edit', compact('post'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, $id)
     {
         $user_id = Auth::user()->id;
         $post = $this->postRepository->find($id);
@@ -77,8 +79,8 @@ class PostController extends Controller
         }
 
         $data = [
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
+            'title' => $request->title,
+            'content' => $request->body,
             'image' => $filename,
             'user_id' => $user_id,
         ];
@@ -87,16 +89,9 @@ class PostController extends Controller
 
         return redirect()->route('dashboard.posts.show')->with('success', 'Post updated successfully');
     }
-
     public function destroy($id)
     {
         $this->postRepository->delete($id);
         return redirect()->route('dashboard.posts.show')->with('success', 'Post deleted successfully');
-    }
-     public function search(Request $request)
-    {
-        $query = $request->input('query');
-        $posts = $this->postRepository->search($query);
-        return view('dashboard.posts.search-results', compact('posts'));
     }
 }

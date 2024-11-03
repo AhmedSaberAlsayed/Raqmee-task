@@ -13,7 +13,7 @@ class PostRepository
 
     public function getByUserId($userId)
     {
-        return Post::where('user_id', $userId)->get();
+        return Post::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
     }
 
     public function create(array $data)
@@ -36,12 +36,12 @@ class PostRepository
     public function delete($id)
     {
         $post = $this->find($id);
+        unlink(public_path($post->image));
         return $post->delete();
     }
 
     public function search( $query)
     {
-
         $posts = Post::where('title', 'LIKE', "%{$query}%")
             ->orWhere('content', 'LIKE', "%{$query}%")
             ->get();

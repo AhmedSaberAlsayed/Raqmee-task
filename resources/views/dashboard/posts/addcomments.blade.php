@@ -4,7 +4,7 @@
     <div class="box-container">
         <form action="{{ route("comments.store",$post->id) }}" method="post">
             @csrf
-            <textarea name="content" placeholder="Reply"></textarea>
+            <textarea name="body" placeholder="Reply"></textarea>
             <input type="submit" value="Add">
         </form>
       <div>

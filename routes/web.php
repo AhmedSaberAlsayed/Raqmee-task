@@ -31,8 +31,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
 });
 
 require __DIR__.'/auth.php';
@@ -44,14 +42,14 @@ Route::group(['prefix'=>'post', "middleware"=> "auth"],function(){
     Route::post('store',[PostController::class, "store"])->name('post.store');
     Route::post('update/{id}',[PostController::class, "update"])->name('post.update');
     Route::post('delete/{id}',[PostController::class, "destroy"])->name('post.delete');
-    Route::get('/search', [PostController::class, 'search'])->name('posts.search');
+    Route::get('/search', [PostController::class, 'index'])->name('posts.search');
 });
 Route::get('post/index',[PostController::class, "index"])->name('dashboard.posts.index');
 Route::get('auth/google', [UserController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('auth/google/callback', [UserController::class, 'handleGoogleCallback']);
 
 Route::group(["prefix"=> 'comment', "middleware"=> "auth" ],function(){
-    
+
 Route::get('show/{id}',[CommentController::class,'show'])->name('comment.show');
 Route::post('store/{id}',[CommentController::class, "store"])->name('comments.store');
 

@@ -1,10 +1,11 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\commentRequest;
 use App\Repositories\CommentRepository;
 
 class CommentController extends Controller
@@ -22,18 +23,14 @@ class CommentController extends Controller
         return view('dashboard.posts.addcomments', compact('post'));
     }
 
-    public function store(Request $request, $id)
+    public function store(commentRequest $request, $id)
     {
-        $request->validate([
-            'content' => 'required',
-        ]);
-
         $author = Auth::user()->name;
 
         $this->commentRepository->create([
             'post_id' => $id,
             'author' => $author,
-            'content' => $request->input('content'),
+            'content' => $request->body,
         ]);
 
         return back()->with('success', 'Comment added successfully!');
